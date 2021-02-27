@@ -159,7 +159,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'https://management.cortts.com/'
+    'https://management.cortts.com'
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 GRAPPELLI_ADMIN_TITLE= 'Cortts Admin'
