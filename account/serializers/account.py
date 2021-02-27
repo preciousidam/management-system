@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from account.models import CorttsAccount, OtherAccount
+from account.models import CorttsAccount, OtherAccount, ExpenseAccount, TopUp
 from .transaction import TransactionSerializer
 
 class MonthlyTransactionListField(serializers.ListField):
@@ -25,3 +25,17 @@ class OtherAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model=OtherAccount
         fields = '__all__'
+
+
+class TopUpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=TopUp
+        fields = '__all__'
+
+class ExpenseAccountSerializer(serializers.ModelSerializer):
+    balance = serializers.FloatField(read_only=True)
+    history = TopUpSerializer(many=True, read_only=True)
+    class Meta:
+        model=ExpenseAccount
+        fields = '__all__'
+

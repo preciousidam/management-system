@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+__pycache__/*
 .vscode
 #Procfile
 
@@ -17,3 +17,4 @@ images/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 venv
+.env

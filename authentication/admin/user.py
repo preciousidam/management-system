@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Register your models here.
 #from .models import InsuredProfile, Identification, OfficerProfile, InsuredOfficer, User
-from authentication.models import User
+from authentication.models import User, Staff
 from authentication.forms import CustomUserCreationForm
 
 
@@ -31,3 +31,6 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User, CustomUserAdmin)
 
+@admin.register(Staff)
+class Staff(admin.ModelAdmin):
+    pass

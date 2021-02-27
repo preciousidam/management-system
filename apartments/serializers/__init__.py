@@ -1,0 +1,1 @@
+from .apartments import ApartmentSerializer, TenancySerializer

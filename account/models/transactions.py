@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
+from django.utils import timezone
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
@@ -22,8 +23,8 @@ class Transaction(models.Model):
     ben_name = models.CharField(_("Beneficiary Name"), max_length=255, help_text="Beneficiary name")
     ben_phone_number = models.CharField(_("Beneficiary Phone Number"), max_length=15, null=True, blank=True, help_text="Beneficiary number")
     receipt = models.ImageField(_("Evidence"), upload_to="receipt", null=True, blank=True)
-    created_at = models.DateTimeField(_("Created At"), default=datetime.now)
-    last_modified = models.DateTimeField(_("Last Modified"), default=datetime.now)
+    created_at = models.DateTimeField(_("Created At"), default=timezone.now)
+    last_modified = models.DateTimeField(_("Last Modified"), default=timezone.now)
 
 
     def __str__(self) -> str:

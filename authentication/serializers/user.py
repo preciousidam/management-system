@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from authentication.models import User
+from authentication.models import User, Staff
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     
@@ -16,3 +16,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class StaffSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Staff
+        fields= '__all__'
+
+    

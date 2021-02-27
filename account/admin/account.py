@@ -1,6 +1,9 @@
+from account import models
+from django.utils.translation import ugettext_lazy as _
+from account.models.account import ExpenseAccount
 from django.contrib import admin
 
-from account.models import CorttsAccount, OtherAccount
+from account.models import CorttsAccount, OtherAccount, TopUp
 from .transaction import TransactionInlineAdmin
 
 # Register your models here.
@@ -15,4 +18,15 @@ class CorttsAccountAdmin(admin.ModelAdmin):
 class OtherAccountAdmin(admin.ModelAdmin):
     list_display = ['number', 'name', 'bank', 'sort_code']
     search_fields = ['name', 'number']
+
+
+class TopUpInlineAdmin(admin.TabularInline):
+    model=TopUp
+    verbose_name=_("Top Up")
+
+@admin.register(ExpenseAccount)
+class ExpenseAccountAdmin(admin.ModelAdmin):
+    list_display = ['name', 'open_balance']
+    search_fields = ['name']
+    inlines=[TopUpInlineAdmin]
     

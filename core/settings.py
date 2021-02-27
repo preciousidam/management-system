@@ -52,7 +52,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'authentication',
     'account',
+    'budget_and_expenses.apps.BudgetAndExpensesConfig',
+    'contacts',
     'mailer',
+    'apartments',
 ]
 
 MIDDLEWARE = [

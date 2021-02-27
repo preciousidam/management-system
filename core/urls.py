@@ -26,5 +26,8 @@ urlpatterns = [
     url(r'^_nested_admin/', include('nested_admin.urls')),
     path('api/v1/', include('authentication.urls')),
     path('api/v1/', include('account.urls')),
+    path('api/v1/', include('budget_and_expenses.urls')),
+    path('api/v1/', include('apartments.urls')),
+    path('api/v1/', include('contacts.urls')),
     path('admin/', admin.site.urls),
 ]
