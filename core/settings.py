@@ -28,7 +28,9 @@ SECRET_KEY = '(o6-tcflbw6-45(6a!dsuy3*e5q)1&!vq3^^&sdz57$&yk&e%h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'man-backend.cortts.com'
+]
 
 
 # Application definition
@@ -96,7 +98,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DATABASE'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
