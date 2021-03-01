@@ -1,1 +1,1 @@
-from .apartments import ApartmentSerializer, TenancySerializer
+from .apartments import ApartmentSerializer, TenancySerializer, SimilarSerializer

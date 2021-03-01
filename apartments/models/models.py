@@ -3,6 +3,8 @@ from django.utils.translation import ugettext_lazy as _
 from datetime import date
 from datetime import timedelta, datetime
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from contacts.models import Client
 # Create your models here.
@@ -39,7 +41,7 @@ class Apartment(models.Model):
 
     @property
     def all_tenancy_period(self):
-        period = Tenancy.objects.all()
+        period = Tenancy.objects.filter(apartment=self.id).all()
         return period
 
     def get_landlord(self):
@@ -52,6 +54,9 @@ class Apartment(models.Model):
         return  ""
     get_tenant.short_description = _("Tenant")
 
+    def similar(self):
+        return Apartment.objects.filter(~models.Q(id=self.id), no_of_bed=self.no_of_bed).all()[:4]
+
 
 def return_date_time():
     now = timezone.now()
@@ -59,9 +64,10 @@ def return_date_time():
 
 class Tenancy(models.Model):
     apartment = models.ForeignKey(Apartment, verbose_name=_("Apartment"), on_delete=models.CASCADE)
-    start = models.DateTimeField(_("Start"), default=timezone.now)
-    end = models.DateTimeField(_("End"), default=return_date_time)
+    start = models.DateField(_("Start"), default=timezone.now)
+    end = models.DateField(_("End"), default=return_date_time)
     tenant = models.ForeignKey(Client, verbose_name=_("Tenant"), on_delete=models.PROTECT)
+    amount = models.FloatField(_("Amount Paid"))
     last_modified = models.DateTimeField(_("Created_at"), auto_now=True)
 
     def __str__(self) -> str:
@@ -70,3 +76,18 @@ class Tenancy(models.Model):
     class Meta:
         ordering = ['-start']
         verbose_name_plural = _("Tenancy Periods")
+
+    @property
+    def tenant_name(self):
+        return _(self.tenant.name)
+
+    
+
+@receiver(post_save, sender=Tenancy)
+def update_apartment(sender, instance, created,**kwargs):
+    
+    if created:
+        apartment = Apartment.objects.get(id=instance.apartment.id)
+        apartment.is_occupied = True
+        apartment.tenant = instance.tenant
+        apartment.save()

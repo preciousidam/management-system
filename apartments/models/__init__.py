@@ -1,1 +1,1 @@
-from .models import Apartment, Tenancy
+from .models import Apartment, Tenancy, update_apartment
