@@ -1,6 +1,6 @@
 from django.contrib import admin
-
-from apartments.models import Apartment, Tenancy
+from django.utils.translation import ugettext_lazy as _
+from apartments.models import Apartment, Tenancy, Reminder
 
 class TenancyInlineAdmin(admin.TabularInline):
     model=Tenancy
@@ -12,3 +12,22 @@ class ApartmentAdmin(admin.ModelAdmin):
     list_display = ['flat', 'building', 'address', 'is_occupied', 'no_of_bed',
                     'get_landlord', 'get_tenant', 'current_tenancy_period',
                     'rent', 'service_charge']
+
+
+    def get_landlord(self, obj):
+        return _(obj.landlord.name)
+    get_landlord.short_description = _("Landlord")
+
+    def get_tenant(self, obj):
+        if (obj.tenant):
+            return _(obj.tenant.name)
+        return  ""
+    get_tenant.short_description = _("Tenant")
+
+
+@admin.register(Reminder)
+class ReminderAdmin(admin.ModelAdmin):
+    list_display = ['apartment', 'sent', 'active']
+
+    def apartment(self, obj):
+        return _(obj.apartment)

@@ -1,1 +1,1 @@
-from .admin import TenancyInlineAdmin, ApartmentAdmin
+from .admin import TenancyInlineAdmin, ApartmentAdmin, ReminderAdmin

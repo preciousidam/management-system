@@ -14,8 +14,10 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import datetime
+#import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+#env = environ.Env(DEBUG=(bool, False))
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
@@ -34,10 +36,29 @@ ALLOWED_HOSTS = [
     'localhost'
 ]
 
+DRAMATIQ_BROKER = {
+    "BROKER": "dramatiq.brokers.redis.RedisBroker",
+    "OPTIONS": {
+        "url": 'redis://redis:6379/0',
+    },
+    "MIDDLEWARE": [
+        "dramatiq.middleware.Prometheus",
+        "dramatiq.middleware.AgeLimit",
+        "dramatiq.middleware.TimeLimit",
+        "dramatiq.middleware.Callbacks",
+        "dramatiq.middleware.Retries",
+        "django_dramatiq.middleware.AdminMiddleware",
+        "django_dramatiq.middleware.DbConnectionsMiddleware",
+    ]
+}
+
+DRAMATIQ_TASKS_DATABASE = "default"
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_dramatiq',
     'grappelli',
     'django.contrib.admin',
     'nested_admin',
@@ -60,6 +81,8 @@ INSTALLED_APPS = [
     'contacts',
     'mailer',
     'apartments',
+    'core',
+    'logger',
 ]
 
 MIDDLEWARE = [
@@ -100,7 +123,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DATABASE'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
@@ -176,6 +199,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'authentication.serializers.UserSerializer'
