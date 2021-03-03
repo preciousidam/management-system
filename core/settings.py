@@ -39,7 +39,7 @@ ALLOWED_HOSTS = [
 DRAMATIQ_BROKER = {
     "BROKER": "dramatiq.brokers.redis.RedisBroker",
     "OPTIONS": {
-        "url": 'redis://redis:6379/0',
+        "url": f'redis://{os.environ.get("REDIS_HOST")}:6379/0',
     },
     "MIDDLEWARE": [
         "dramatiq.middleware.Prometheus",
