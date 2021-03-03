@@ -19,7 +19,6 @@ class Command(BaseCommand):
 
         for index, apartment in enumerate(apartments):
             days = apartment.time_to_expiry_date()
-            print(days)
             if days == 90 or days == 60 or days <=31:
                 apartment.create_reminder(days)
 
