@@ -227,10 +227,10 @@ CLOUDINARY_STORAGE = {
 MEDIA_URL = '/media/'  # or any prefix you choose
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-EMAIL_HOST_USER='test@prestone.com.ng'
-EMAIL_HOST_PASSWORD='Lilian01!@'
-DEFAULT_FROM_EMAIL='test@prestone.com.ng'
-EMAIL_HOST='mail.prestone.com.ng'
-EMAIL_PORT=26
+EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL=os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_HOST=os.environ.get('EMAIL_HOST')
+EMAIL_PORT=int(os.environ.get('EMAIL_PORT'))
 EMAIL_USE_TLS=True
 EMAIL_USE_SSL=False
