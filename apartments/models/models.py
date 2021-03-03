@@ -4,6 +4,7 @@ from datetime import timedelta, datetime, date
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.exceptions import ObjectDoesNotExist
 
 from contacts.models import Client
 # Create your models here.
@@ -38,7 +39,8 @@ class Apartment(models.Model):
         try:
             period = Tenancy.objects.filter(apartment=self.id).latest('start')
             return period
-        except Apartment.DoesNotExist as e:
+        except ObjectDoesNotExist as e:
+            print(e)
             return None
 
     @property
