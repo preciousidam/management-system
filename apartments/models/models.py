@@ -35,8 +35,11 @@ class Apartment(models.Model):
 
     @property
     def current_tenancy_period(self):
-        period = Tenancy.objects.filter(apartment=self.id).latest('start')
-        return period
+        try:
+            period = Tenancy.objects.filter(apartment=self.id).latest('start')
+            return period
+        except Apartment.DoesNotExist as e:
+            return None
 
     @property
     def all_tenancy_period(self):
@@ -59,9 +62,11 @@ class Apartment(models.Model):
         return Apartment.objects.filter(~models.Q(id=self.id), no_of_bed=self.no_of_bed).all()[:4]
 
     def time_to_expiry_date(self):
-        diff = self.current_tenancy_period.end - date.today()
+        if self.current_tenancy_period:
+            diff = self.current_tenancy_period.end - date.today()
         
-        return diff.days
+            return diff.days
+        return 10000
 
     
     def create_reminder(self, days):
