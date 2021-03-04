@@ -77,6 +77,7 @@ class Apartment(models.Model):
             reminder = Reminder.objects.get(apartment=self.id)
             reminder.active = True
             reminder.body = body
+            reminder.save()
         except Reminder.DoesNotExist:
             reminder = Reminder(apartment=self, body=body)
             reminder.save()

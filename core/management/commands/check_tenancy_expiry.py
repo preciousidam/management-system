@@ -18,11 +18,12 @@ class Command(BaseCommand):
         apartments = Apartment.objects.all()
 
         for index, apartment in enumerate(apartments):
-            days = apartment.time_to_expiry_date()
-            if days == 90 or days == 60 or days <=370:
-                apartment.create_reminder(days)
+            if apartment.is_occupied:
+                days = apartment.time_to_expiry_date()
+                if days == 90 or days == 60 or days <=370:
+                    apartment.create_reminder(days)
 
-                self.send_mails()
+                    self.send_mails()
             self.log.update_count(index + 1)
 
         self.log.completed()
