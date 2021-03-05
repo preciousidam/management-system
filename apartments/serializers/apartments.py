@@ -22,6 +22,7 @@ class ApartmentSerializer(serializers.ModelSerializer):
     get_tenant = serializers.CharField(read_only=True)
     get_landlord = serializers.CharField(read_only=True)
     similar = SimilarSerializer(many=True, read_only=True)
+    agreement = serializers.CharField(read_only=True)
 
     class Meta:
         model=Apartment

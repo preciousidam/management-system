@@ -70,6 +70,16 @@ class Apartment(models.Model):
             return diff.days
         return 10000
 
+    @property
+    def agreement(self):
+        from .agreement import Agreement
+        try:
+            agreement = Agreement.objects.get(apartment=self.id)
+            return agreement.file
+        except ObjectDoesNotExist:
+            print('No agreement was found')
+            return None
+
     
     def create_reminder(self, days):
         body = f"Rent for Apartment {self.flat} {self.building} will expire in {days}"
