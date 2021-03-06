@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 
 from apartments.models import Apartment, Tenancy
+from .agreement import AgreementSerializer
 
 
 class TenancySerializer(serializers.ModelSerializer):
@@ -22,7 +23,7 @@ class ApartmentSerializer(serializers.ModelSerializer):
     get_tenant = serializers.CharField(read_only=True)
     get_landlord = serializers.CharField(read_only=True)
     similar = SimilarSerializer(many=True, read_only=True)
-    agreement = serializers.CharField(read_only=True)
+    agreement = AgreementSerializer(read_only=True)
 
     class Meta:
         model=Apartment

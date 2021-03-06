@@ -4,8 +4,12 @@ from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from .models import Apartment
 
 class Agreement(models.Model):
+    TYPE = [
+        ('word', 'word'), ('pdf', 'pdf')
+    ]
     title = models.CharField(_("Title"), max_length=255)
     file = models.FileField(_("File"), upload_to="agreement", storage=RawMediaCloudinaryStorage())
+    doc_type = models.CharField(_("Document Type"), max_length=50, choices=TYPE, default='pdf')
     apartment = models.ForeignKey(Apartment, verbose_name=_("Apartment"), on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateField(_("Created AT"), auto_now_add=True)
     last_modified = models.DateField(_("Last Modified"), auto_now=True)

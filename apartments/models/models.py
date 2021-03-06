@@ -74,8 +74,8 @@ class Apartment(models.Model):
     def agreement(self):
         from .agreement import Agreement
         try:
-            agreement = Agreement.objects.get(apartment=self.id)
-            return agreement.file
+            agreement = Agreement.objects.filter(apartment=self.id).first()
+            return agreement
         except ObjectDoesNotExist:
             print('No agreement was found')
             return None
