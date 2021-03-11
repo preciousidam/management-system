@@ -26,6 +26,10 @@ media
 staticfiles/
 man-drf/staticfiles/
 
+./static/
+static/
+man-drf/static/
+
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
 *.py[cod]
